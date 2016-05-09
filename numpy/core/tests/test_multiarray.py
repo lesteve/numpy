@@ -6445,5 +6445,13 @@ def test_orderconverter_with_nonASCII_unicode_ordering():
     a = np.arange(5)
     assert_raises(ValueError, a.flatten, order=u'\xe2')
 
+
+def test_clip_bug_on_py35_windows():
+    arr = np.array([np.nan, 10], dtype='f8')
+    result = np.clip(arr, -1, 1)
+    expected = np.array([np.nan, 1], dtype='f8')
+    assert_array_equal(result, expected)
+
+
 if __name__ == "__main__":
     run_module_suite()
